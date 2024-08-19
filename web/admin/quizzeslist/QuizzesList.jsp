@@ -1,0 +1,80 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="myTags" tagdir="/WEB-INF/tags" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Quizzes List</title>
+        <%@include file="/common/ImportBootstrap.jsp" %>
+        <link rel="stylesheet" href="admin/common/admin-common.css">
+        <link rel="stylesheet" href="public/css/sortable/sortable-theme-bootstrap.css">
+        <script src="admin/common/admin-common.js"></script>
+        <script>
+            window.onload = function() {
+                // Lấy giá trị của successMessage từ session
+                var successMessage = '<c:out value="${sessionScope.message}" />';
+                if (successMessage=="Add successfully") {
+                    alert(successMessage);
+                   
+                    // Xóa successMessage từ session sau khi hiển thị
+                    <%
+                    session.removeAttribute("message");
+                    %>
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="admin-layout">
+            <%@include file="/admin/common/admin-header.jsp" %>
+            <%@include file="/admin/common/admin-sidebar.jsp" %>
+            <main class="admin-main" x-data="state">
+                <div class="container">
+                    <h2 class="my-4">
+                        <i class="bi bi-clipboard-check-fill"></i>
+                        ${isSearching ? 'Searching Quizzes List' : 'Quizzes List' }
+                    </h2>
+
+                    <c:if test="${empty subjects}">
+                        <div class="alert alert-warning" role="alert">
+                            No subjects have been assigned to you. If you think this is a mistake, please contact the administrator
+                        </div>
+                    </c:if>
+
+                    <%@include file="/admin/quizzeslist/QuizzesListForm.jsp" %>
+
+                    <div class="my-4 card">
+                        <div class="card-body">
+                            <form action="admin/addquiz" method="get">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <input type ="text" name="check" value="false" hidden="">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-plus-circle"></i>
+                                        Add New Quiz
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <%@include file="/admin/quizzeslist/QuizzesListTable.jsp" %>
+
+                    <c:if test="${result.getTotalPages() > 0}">
+                        <myTags:Paginator
+                            className="mt-3 d-flex justify-content-center"
+                            current="${param.page}"
+                            total="${result.getTotalPages()}"
+                            size="1"
+                            url="admin/quizzeslist"
+                        />
+                    </c:if>
+                </div>
+            </main>
+        </div>
+
+        <script src="public/js/sortable/sortable.min.js"></script>
+        
+    </body>
+</html>
+

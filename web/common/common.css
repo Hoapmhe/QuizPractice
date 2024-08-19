@@ -1,0 +1,31 @@
+.body-layout {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-auto-rows: 200px;
+    min-height: 100vh;
+}
+
+
+.sortable-table th {
+    white-space: nowrap;
+}
+
+.sortable-table td {
+    white-space: nowrap;
+}
+
+.sortable-table th::after {
+    float: none !important;
+    margin: 0 !important;
+    vertical-align: middle !important;
+    position: relative;
+    left: 4px;
+}
+
+.sortable-table th[data-sorted-direction="ascending"]::after {
+    top: -3px;
+}
+
+.sortable-table th[data-sorted-direction="descending"]::after {
+    top: 3px;
+}

@@ -1,0 +1,22 @@
+/* 
+    Created on : Jun 5, 2024, 11:17:33 AM
+    Author     : Hoapmhe173343
+*/
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+
+
